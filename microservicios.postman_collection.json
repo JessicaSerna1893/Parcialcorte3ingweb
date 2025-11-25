@@ -1,0 +1,126 @@
+{
+    "info": {
+      "name": "Microservicios Laravel - REST & SOAP",
+      "_postman_id": "abcd1234-5678-efgh-9012-ijklmnop",
+      "description": "Colección para probar microservicio SOAP de usuarios y REST de productos.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "SOAP - Crear Usuario Admin/User",
+        "request": {
+          "method": "POST",
+          "header": [{ "key": "Content-Type", "value": "text/xml" }],
+          "body": {
+            "mode": "raw",
+            "raw": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><createUser><name>admin</name><role>admin</role><password>123456</password></createUser></soap:Body></soap:Envelope>"
+          },
+          "url": { "raw": "http://localhost:8000/soap/user" }
+        }
+      },
+  
+      {
+        "name": "SOAP - Generar Token",
+        "request": {
+          "method": "POST",
+          "header": [{ "key": "Content-Type", "value": "text/xml" }],
+          "body": {
+            "mode": "raw",
+            "raw": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><login><username>admin</username><password>123456</password></login></soap:Body></soap:Envelope>"
+          },
+          "url": { "raw": "http://localhost:8000/soap/login" }
+        }
+      },
+  
+      {
+        "name": "REST - Productos - Listar",
+        "request": {
+          "method": "GET",
+          "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+          "url": { "raw": "http://localhost:8000/api/productos", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "productos"] }
+        }
+      },
+  
+      {
+        "name": "REST - Crear Producto",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" },
+            { "key": "Authorization", "value": "Bearer {{token}}" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"nombre\":\"Arroz\",\"categoria_id\":1,\"stock\":50,\"precio\":3500,\"estado\":\"A\"}"
+          },
+          "url": { "raw": "http://localhost:8000/api/productos" }
+        }
+      },
+  
+      {
+        "name": "REST - Actualizar Stock",
+        "request": {
+          "method": "PUT",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" },
+            { "key": "Authorization", "value": "Bearer {{token}}" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"cantidad\": 10}"
+          },
+          "url": { "raw": "http://localhost:8000/api/productos/1/stock" }
+        }
+      },
+  
+      {
+        "name": "REST - Paginación (solo cantidad)",
+        "request": {
+          "method": "GET",
+          "header": [
+            { "key": "Authorization", "value": "Bearer {{token}}" }
+          ],
+          "url": {
+            "raw": "http://localhost:8000/api/productos/paginacion?per_page=5",
+            "query": [{ "key": "per_page", "value": "5" }]
+          }
+        }
+      },
+  
+      {
+        "name": "REST - Paginación (cantidad + página)",
+        "request": {
+          "method": "GET",
+          "header": [
+            { "key": "Authorization", "value": "Bearer {{token}}" }
+          ],
+          "url": {
+            "raw": "http://localhost:8000/api/productos/paginacion2?per_page=5&page=2",
+            "query": [
+              { "key": "per_page", "value": "5" },
+              { "key": "page", "value": "2" }
+            ]
+          }
+        }
+      },
+  
+      {
+        "name": "REST - Buscar producto por nombre",
+        "request": {
+          "method": "GET",
+          "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+          "url": {
+            "raw": "http://localhost:8000/api/productos/buscar?nombre=arroz",
+            "query": [{ "key": "nombre", "value": "arroz" }]
+          }
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "token",
+        "value": ""
+      }
+    ]
+  }
+  
