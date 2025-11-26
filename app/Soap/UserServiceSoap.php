@@ -8,15 +8,14 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserServiceSoap {
-
+    //Crea el usuario y le entrega como parametro el nombre, email, password... 
     public function createUser($name, $email, $password, $role) {
         $r = Role::where('name', $role)->first();
-
         $user = User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
-            'role_id' => $r->id
+            'role_id' => $r["id"]
         ]);
 
         return ['status' => true, 'user_id' => $user->id];

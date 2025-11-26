@@ -14,7 +14,7 @@ class ProductoController extends Controller {
 
         $query = Producto::query();
 
-        if ($q = $req->query('q')) {
+        if ($q = $req->query('nombre')) {
             $query->where('nombre', 'like', "%$q%");
         }
 

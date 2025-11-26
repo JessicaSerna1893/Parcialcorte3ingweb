@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\ProductoController;
 use App\Soap\UserServiceSoap;
 
 Route::post('/register', [AuthController::class, 'register']);

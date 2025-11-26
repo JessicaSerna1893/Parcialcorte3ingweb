@@ -12,9 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'jwt.validate' => \App\Http\Middleware\ValidateJwt::class,
-        ]);
+         $middleware->api(prepend: [
+        // Middleware de API
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+    ]);
+
+    $middleware->alias([
+        'jwt.validate' => \App\Http\Middleware\ValidateJwt::class,
+    ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
